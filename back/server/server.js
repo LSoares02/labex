@@ -20,10 +20,6 @@ app.use("/", routes);
 
 app.use(express.static(path.join(__dirname, "../build")));
 
-app.use("", (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, "../build", "index.html"));
-});
-
 // start node server
 const port = process.env.PORT || 5000;
 server.listen(port, () => {

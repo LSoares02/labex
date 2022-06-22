@@ -1,0 +1,9 @@
+#top{
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+}
+
+#cards{
+    margin: 1%;
+}

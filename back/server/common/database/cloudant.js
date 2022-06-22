@@ -1,7 +1,8 @@
 const { CloudantV1 } = require("@ibm-cloud/cloudant");
 const { IamAuthenticator } = require("ibm-cloud-sdk-core");
+require("dotenv").config();
 
-const cloudantApiKey = process.env.CLOUDANT_APIKEY;
+const cloudantApiKey = process.env["CLOUDANT_APIKEY"];
 const cloudantURL = process.env.CLOUDANT_URL;
 const cloudantDbName = process.env.CLOUDANT_DB_NAME;
 

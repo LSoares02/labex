@@ -1,20 +1,39 @@
-import React, { useContext, useState, useEffect, createContext } from "react";
-import { useHistory } from "react-router-dom";
-
-import { getAccounts, getResources } from "../helpers/apiCalls";
+import React, { useContext, useState, createContext } from "react";
 
 const GlobalStateContext = createContext({});
 
 export default function GlobalStateProvider({ children }) {
-  const history = useHistory();
+  const [language, setLanguage] = useState("en");
+  const [loading, setLoading] = useState(true);
 
-  const [example, setExample] = useState("");
+  const [openDetails, setOpenDetails] = useState(false);
+  const [detailsId, setDetailsId] = useState(null);
+
+  const [extensionPosts, setExtensionPosts] = useState(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filteredByPage, setFilteredByPage] = useState([]);
+  const [filteredBySearch, setFilteredBySearch] = useState([]);
 
   return (
     <GlobalStateContext.Provider
       value={{
-        example,
-        setExample,
+        language,
+        setLanguage,
+        loading,
+        setLoading,
+        extensionPosts,
+        setExtensionPosts,
+        openDetails,
+        setOpenDetails,
+        detailsId,
+        setDetailsId,
+        currentPage,
+        setCurrentPage,
+        filteredByPage,
+        setFilteredByPage,
+        filteredBySearch,
+        setFilteredBySearch,
       }}
     >
       {children}
