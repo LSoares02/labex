@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useGlobalState } from "../../hooks/globalState";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -9,73 +10,11 @@ import Button from "@mui/material/Button";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../../helpers/theme";
 
-import { styled, alpha } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}));
+import SearchComponent from "../../components/Search";
 
 export default function NavigationBar() {
-  const { extensionPosts, setFilteredBySearch } = useGlobalState();
-
-  const [search, setSearch] = React.useState("");
-
-  function handleChange(e) {
-    if (e.target.value) {
-      setSearch(e.target.value);
-    } else setSearch("");
-  }
-
-  React.useEffect(() => {
-    setFilteredBySearch(
-      extensionPosts?.values.filter((post) => {
-        return post.title
-          .toLowerCase()
-          .replace(/\s/g, "")
-          .includes(search.toLowerCase().replace(/\s/g, ""));
-      })
-    );
-  }, [search]);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <ThemeProvider theme={theme}>
@@ -85,22 +24,41 @@ export default function NavigationBar() {
             variant="dense"
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
-            <div>
-              <Button color="inherit">Home</Button>
-              <Button color="inherit">Atividades</Button>
-              <Button color="inherit">Doscentes e Parceiros</Button>
-              <Button color="inherit">Fale Conosco</Button>
+            <div id="buttons">
+              <Button
+                color="inherit"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Home
+              </Button>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  navigate("/activities");
+                }}
+              >
+                Atividades
+              </Button>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  navigate("/faculty");
+                }}
+              >
+                Docentes e Parceiros
+              </Button>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  navigate("/social");
+                }}
+              >
+                Fale Conosco
+              </Button>
             </div>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-                onChange={handleChange}
-              />
-            </Search>
+            {location.pathname === "/activities" ? <SearchComponent /> : ""}
           </Toolbar>
         </AppBar>
       </Box>

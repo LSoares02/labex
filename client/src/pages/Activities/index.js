@@ -36,7 +36,7 @@ export default function Dashboard() {
       setExtensionPosts(response.data);
       setLoading(false);
     };
-    apiCall();
+    if (!extensionPosts) apiCall();
   }, []);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function Dashboard() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div id="content">
+      <div id="activitiesContent">
         <div id="top">
           <Header />
           <NavigationBar />

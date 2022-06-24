@@ -57,6 +57,7 @@ export default function DetailsModal() {
               aria-label="close-details"
               onClick={() => {
                 setOpenDetails(false);
+                setExpanded(false);
               }}
             >
               <CloseIcon />
