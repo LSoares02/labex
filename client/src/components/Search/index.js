@@ -76,7 +76,7 @@ export default function SearchComponent() {
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        placeholder="Search…"
+        placeholder="Busca..."
         inputProps={{ "aria-label": "search" }}
         onChange={handleChange}
       />

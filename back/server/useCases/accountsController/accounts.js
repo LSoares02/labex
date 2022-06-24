@@ -3,39 +3,40 @@ const { insertOnCloudant, getFromCloudant } = require("../../helpers/cloudant");
 const documentName = "accounts";
 
 async function registerAccount(req, res) {
-  const { id, email, password, registerTime } = req.body;
+  const { email, password, registerTime, adm } = req.body;
 
   const existingAccounts = await getFromCloudant(documentName);
   if (existingAccounts) {
     const filtered = existingAccounts.values.filter(
-      (account) => account.id === id
+      (account) => account.email === email
     );
     if (filtered.length > 0) {
-      res.send({ status: { Inserted: false } });
+      res.send({ status: { inserted: false } });
     } else {
-      existingAccounts.values.push({ id, email, password, registerTime });
+      existingAccounts.values.push({ email, password, registerTime, adm });
       await insertOnCloudant(documentName, existingAccounts);
-      res.send({ status: { Inserted: true } });
+      res.send({ status: { inserted: true } });
     }
   } else {
     await insertOnCloudant(documentName, {
-      values: [{ id, email, password, registerTime }],
+      values: [{ email, password, registerTime, adm }],
     });
-    res.send({ status: { Inserted: true } });
+    res.send({ status: { inserted: true } });
   }
 }
 
 async function getAccount(req, res) {
-  const { id } = req.body;
+  const { email, password } = req.body;
   const existingAccounts = await getFromCloudant(documentName);
 
   const filtered = existingAccounts.values.filter(
-    (account) => account.id === id
+    (account) => account.email === email && account.password === password
   );
   if (filtered.length > 0) {
+    delete filtered[0].registerTime;
     res.send(filtered[0]);
   } else {
-    res.send({ status: { Found: false } });
+    res.send({ status: { found: false } });
   }
 }
 

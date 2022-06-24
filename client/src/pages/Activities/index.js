@@ -21,10 +21,8 @@ export default function Dashboard() {
     extensionPosts,
     filteredByPage,
     setFilteredByPage,
-    filteredBySearch,
     setExtensionPosts,
     currentPage,
-    setCurrentPage,
     loading,
     setLoading,
   } = useGlobalState();
@@ -46,10 +44,6 @@ export default function Dashboard() {
       );
     }
   }, [extensionPosts, currentPage]);
-
-  useEffect(() => {
-    console.log(filteredBySearch);
-  }, [filteredBySearch]);
 
   return (
     <ThemeProvider theme={theme}>
