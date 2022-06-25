@@ -4,9 +4,7 @@ const GlobalStateContext = createContext({});
 
 export default function GlobalStateProvider({ children }) {
   const [language, setLanguage] = useState("en");
-  const [account, setAccount] = useState(
-    JSON.parse(localStorage.getItem("@labex/account"))
-  );
+  const [account, setAccount] = useState(null);
 
   const [loading, setLoading] = useState(true);
 
@@ -20,14 +18,6 @@ export default function GlobalStateProvider({ children }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredByPage, setFilteredByPage] = useState([]);
   const [filteredBySearch, setFilteredBySearch] = useState([]);
-
-  useEffect(() => {
-    if (account) {
-      localStorage.setItem("@labex/account", JSON.stringify(account));
-    } else {
-      localStorage.removeItem("@labex/account");
-    }
-  }, [account]);
 
   return (
     <GlobalStateContext.Provider

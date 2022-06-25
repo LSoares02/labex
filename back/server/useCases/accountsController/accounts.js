@@ -3,7 +3,7 @@ const { insertOnCloudant, getFromCloudant } = require("../../helpers/cloudant");
 const documentName = "accounts";
 
 async function registerAccount(req, res) {
-  const { email, password, registerTime, adm } = req.body;
+  const { name, email, password, registerTime, adm } = req.body;
 
   const existingAccounts = await getFromCloudant(documentName);
   if (existingAccounts) {
@@ -13,13 +13,19 @@ async function registerAccount(req, res) {
     if (filtered.length > 0) {
       res.send({ status: { inserted: false } });
     } else {
-      existingAccounts.values.push({ email, password, registerTime, adm });
+      existingAccounts.values.push({
+        name,
+        email,
+        password,
+        registerTime,
+        adm,
+      });
       await insertOnCloudant(documentName, existingAccounts);
       res.send({ status: { inserted: true } });
     }
   } else {
     await insertOnCloudant(documentName, {
-      values: [{ email, password, registerTime, adm }],
+      values: [{ name, email, password, registerTime, adm }],
     });
     res.send({ status: { inserted: true } });
   }
@@ -29,10 +35,10 @@ async function getAccount(req, res) {
   const { email, password } = req.body;
   const existingAccounts = await getFromCloudant(documentName);
 
-  const filtered = existingAccounts.values.filter(
+  const filtered = existingAccounts?.values.filter(
     (account) => account.email === email && account.password === password
   );
-  if (filtered.length > 0) {
+  if (filtered?.length > 0) {
     delete filtered[0].registerTime;
     res.send(filtered[0]);
   } else {

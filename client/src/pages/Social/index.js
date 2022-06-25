@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 
 import { useGlobalState } from "../../hooks/globalState";
 
-import { getActivities } from "../../helpers/apiCalls";
-
 import Header from "../../components/Header";
 import NavigationBar from "../../components/NavigationBar";
 

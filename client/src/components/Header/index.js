@@ -1,6 +1,6 @@
 import * as React from "react";
-
 import { useGlobalState } from "../../hooks/globalState";
+import { useLocation } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -18,6 +18,7 @@ import "./style.css";
 
 export default function Header() {
   const { account, setAccount, setOpenLogin } = useGlobalState();
+  const location = useLocation();
 
   return (
     <div>
@@ -28,7 +29,7 @@ export default function Header() {
             <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
               LABEX
             </Typography>
-            {account ? (
+            {account && location.pathname !== "/register" ? (
               <IconButton
                 size="large"
                 edge="start"
@@ -38,6 +39,8 @@ export default function Header() {
               >
                 <AppsIcon />
               </IconButton>
+            ) : location.pathname === "/register" ? (
+              ""
             ) : (
               <div
                 id="loginText"
@@ -54,7 +57,7 @@ export default function Header() {
                 Fazer Login
               </div>
             )}
-            <AvatarComponent />
+            {location.pathname === "/register" ? "" : <AvatarComponent />}
           </Toolbar>
         </AppBar>
       </Box>

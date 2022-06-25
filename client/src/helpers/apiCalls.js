@@ -15,3 +15,24 @@ export async function login(insertedData) {
     return response.data;
   }
 }
+
+export async function register(insertedData) {
+  const response = await api.post("/registerAccount", {
+    name: insertedData.name,
+    email: insertedData.email,
+    password: insertedData.password,
+    adm: false,
+    registerTime: new Date().toLocaleDateString("pt-BR", {
+      timeZone: "America/Sao_Paulo",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    }),
+  });
+
+  if (response.data.status?.inserted === false) {
+    return null;
+  } else {
+    return response.data;
+  }
+}

@@ -4,9 +4,14 @@ import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Backdrop from "@mui/material/Backdrop";
+import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
 import Modal from "@mui/material/Modal";
+
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import { useGlobalState } from "../../hooks/globalState";
 import { Button } from "@mui/material";
@@ -30,6 +35,7 @@ export default function LoginModal() {
   const { openLogin, setOpenLogin, setAccount } = useGlobalState();
 
   const [buttonLoading, setButtonLoading] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
   const [insertedData, setInsertedData] = React.useState({
     email: "",
     password: "",
@@ -52,14 +58,14 @@ export default function LoginModal() {
     if (response) {
       setAccount(response);
       setOpenLogin(false);
+      cleanInsertedData();
     } else {
       setLoginFail(true);
     }
-    cleanInsertedData();
     setButtonLoading(false);
   }
   async function handleSignupClick() {
-    navigate("/");
+    navigate("/register");
     cleanInsertedData();
     setOpenLogin(false);
   }
@@ -69,6 +75,7 @@ export default function LoginModal() {
       password: "",
     });
   }
+
   return (
     <div>
       <Modal
@@ -103,11 +110,26 @@ export default function LoginModal() {
             <TextField
               variant="outlined"
               label="Senha"
-              type="password"
+              type={showPassword ? "text" : "password"}
               onChange={(e) => {
                 let tmp = { ...insertedData };
                 tmp.password = e.target.value;
                 setInsertedData(tmp);
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => {
+                        setShowPassword(!showPassword);
+                      }}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
             />
 

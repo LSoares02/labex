@@ -7,6 +7,7 @@ import Dashboard from "./pages/Activities/index";
 import Home from "./pages/Home/index";
 import Faculty from "./pages/Faculty";
 import Social from "./pages/Social";
+import Register from "./pages/Register";
 
 export default function Pages() {
   return (
@@ -17,6 +18,7 @@ export default function Pages() {
           <Route exact path="/activities" element={<Dashboard />} />
           <Route exact path="/faculty" element={<Faculty />} />
           <Route exact path="/social" element={<Social />} />
+          <Route exact path="/register" element={<Register />} />
         </Routes>
       </GlobalStateProvider>
     </BrowserRouter>
