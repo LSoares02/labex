@@ -10,6 +10,7 @@ import AppsIcon from "@mui/icons-material/Apps";
 import { IconButton } from "@mui/material";
 
 import LoginModal from "../LoginModal";
+import ActivityRegister from "../ActivityRegister";
 import AvatarComponent from "../Avatar";
 
 import { logout } from "../../helpers/helpers";
@@ -17,12 +18,18 @@ import { logout } from "../../helpers/helpers";
 import "./style.css";
 
 export default function Header() {
-  const { account, setAccount, setOpenLogin } = useGlobalState();
+  const { account, setAccount, setOpenLogin, setOpenActivityRegister } =
+    useGlobalState();
   const location = useLocation();
+
+  function handleMenuClick() {
+    setOpenActivityRegister(true);
+  }
 
   return (
     <div>
       <LoginModal />
+      <ActivityRegister />
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
@@ -36,6 +43,7 @@ export default function Header() {
                 color="inherit"
                 aria-label="menu"
                 sx={{ mr: 2 }}
+                onClick={handleMenuClick}
               >
                 <AppsIcon />
               </IconButton>

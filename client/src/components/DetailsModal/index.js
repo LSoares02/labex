@@ -50,7 +50,7 @@ export default function DetailsModal() {
       sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
       open={openDetails}
     >
-      <Card sx={{ maxWidth: 600, maxHeight: 700 }}>
+      <Card sx={{ width: 600, maxHeight: 700 }}>
         <CardHeader
           action={
             <IconButton

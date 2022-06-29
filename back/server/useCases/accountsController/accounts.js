@@ -35,7 +35,7 @@ async function getAccount(req, res) {
   const { email, password } = req.body;
   const existingAccounts = await getFromCloudant(documentName);
 
-  const filtered = existingAccounts?.values.filter(
+  const filtered = existingAccounts?.values?.filter(
     (account) => account.email === email && account.password === password
   );
   if (filtered?.length > 0) {

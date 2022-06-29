@@ -36,3 +36,32 @@ export async function register(insertedData) {
     return response.data;
   }
 }
+
+export async function activityRegister(insertedData) {
+  const {
+    id,
+    title,
+    type,
+    initialDate,
+    finalDate,
+    authors,
+    description,
+    image,
+    links,
+  } = insertedData;
+  const response = await api.post("/registerActivity", {
+    value: {
+      id: id,
+      title: title,
+      type: type,
+      initialDate: initialDate,
+      finalDate: finalDate,
+      authors: authors,
+      description: description,
+      image: image,
+      links: links,
+      registerTime: new Date(),
+    },
+  });
+  return response;
+}

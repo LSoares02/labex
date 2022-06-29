@@ -22,6 +22,7 @@ async function getFromCloudant(docId) {
     if (err.code === 404) {
       return null;
     } else {
+      console.log(err);
       return { Error: "Unnable to connect with suplied credentials" };
     }
   }

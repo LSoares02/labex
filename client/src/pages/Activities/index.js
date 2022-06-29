@@ -27,20 +27,21 @@ export default function Dashboard() {
     setLoading,
   } = useGlobalState();
 
+  const apiCall = async () => {
+    setLoading(true);
+    const response = await getActivities();
+    setExtensionPosts(response.data);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const apiCall = async () => {
-      setLoading(true);
-      const response = await getActivities();
-      setExtensionPosts(response.data);
-      setLoading(false);
-    };
     if (!extensionPosts) apiCall();
   }, []);
 
   useEffect(() => {
     if (extensionPosts) {
       setFilteredByPage(
-        extensionPosts.values.slice(currentPage * 12 - 12, currentPage * 12)
+        extensionPosts.values?.slice(currentPage * 12 - 12, currentPage * 12)
       );
     }
   }, [extensionPosts, currentPage]);

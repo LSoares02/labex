@@ -61,7 +61,7 @@ export default function SearchComponent() {
 
   React.useEffect(() => {
     setFilteredBySearch(
-      extensionPosts?.values.filter((post) => {
+      extensionPosts?.values?.filter((post) => {
         return post.title
           .toLowerCase()
           .replace(/\s/g, "")

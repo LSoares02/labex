@@ -16,8 +16,8 @@ export default function PaginationComponent() {
 
   React.useEffect(() => {
     if (extensionPosts) {
-      const tmp = extensionPosts.values.length / 12;
-      if (extensionPosts.values.length % 12 !== 0) {
+      const tmp = extensionPosts.values?.length / 12;
+      if (extensionPosts.values?.length % 12 !== 0) {
         setNumberOfPages(Math.trunc(tmp) + 1);
       } else setNumberOfPages(Math.trunc(tmp));
     }
