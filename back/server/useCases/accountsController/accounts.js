@@ -52,7 +52,11 @@ async function getAccounts(req, res) {
   delete existingAccounts._id;
   delete existingAccounts._rev;
 
-  res.send(existingAccounts);
+  res.send(
+    existingAccounts.values.map((account) => {
+      return { name: account.name, email: account.email };
+    })
+  );
 }
 
 module.exports = { registerAccount, getAccount, getAccounts };

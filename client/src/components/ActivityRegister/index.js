@@ -1,24 +1,19 @@
 import * as React from "react";
-
 import { useGlobalState } from "../../hooks/globalState";
 
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Backdrop from "@mui/material/Backdrop";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
-import { Button, Stack } from "@mui/material";
-
+import { Stack } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 import { activityRegister } from "../../helpers/apiCalls";
 
-import DatePicker from "../DatePicker";
-
-import { styled } from "@mui/material/styles";
+import ActivityRegisterLeft from "../ActivityRegisterLeft";
+import ActivityRegisterRight from "../ActivityRegisterRight";
 
 const style = {
   position: "absolute",
@@ -32,10 +27,6 @@ const style = {
   maxHeight: 420,
 };
 
-const Input = styled("input")({
-  display: "none",
-});
-
 export default function ActivityRegister() {
   const {
     openActivityRegister,
@@ -47,18 +38,25 @@ export default function ActivityRegister() {
   const tomorrow = new Date().setDate(new Date().getDate() + 1);
 
   const [buttonLoading, setButtonLoading] = React.useState(false);
+  const [registerFail, setRegisterFail] = React.useState(false);
+  const [invalid, setInvalid] = React.useState(false);
+
+  const [titleError, setTitleError] = React.useState(false);
+  const [dateError, setDateError] = React.useState(false);
+  const [authorsError, setAuthorsError] = React.useState(false);
+  const [descriptionError, setDescriptionError] = React.useState(false);
+
   const [insertedData, setInsertedData] = React.useState({
-    id: "",
-    title: "",
+    id: null,
+    title: null,
     type: "Programa",
     initialDate: new Date(),
     finalDate: new Date(tomorrow),
     authors: [],
-    description: "",
-    image: "",
+    description: null,
+    image: null,
     links: [],
   });
-  const [registerFail, setRegisterFail] = React.useState(false);
 
   React.useEffect(() => {
     if (registerFail) {
@@ -67,14 +65,65 @@ export default function ActivityRegister() {
   }, [registerFail]);
 
   React.useEffect(() => {
-    console.log(insertedData);
+    checkTitle();
+    checkDates();
+    checkAuthors();
+    checkDescription();
   }, [insertedData]);
 
-  function handleSelectChange(event) {
-    const tmp = { ...insertedData };
-    tmp.type = event.target.value;
-    setInsertedData(tmp);
+  React.useEffect(() => {
+    checkValidData();
+  }, [titleError, dateError, authorsError, descriptionError]);
+
+  function checkTitle() {
+    if (insertedData.title?.length > 30 || !insertedData.title) {
+      setTitleError(true);
+    } else {
+      setTitleError(false);
+    }
   }
+  function checkDates() {
+    if (insertedData.initialDate > insertedData.finalDate) {
+      setDateError(true);
+    } else {
+      setDateError(false);
+    }
+  }
+  function checkAuthors() {
+    if (insertedData.authors.length === 0) {
+      setAuthorsError(true);
+    } else {
+      setAuthorsError(false);
+    }
+  }
+  function checkDescription() {
+    if (insertedData.description?.length > 500 || !insertedData.description) {
+      setDescriptionError(true);
+    } else {
+      setDescriptionError(false);
+    }
+  }
+  function checkValidData() {
+    if (titleError || dateError || authorsError || descriptionError) {
+      setInvalid(true);
+    } else {
+      setInvalid(false);
+    }
+  }
+  function cleanInsertedData() {
+    setInsertedData({
+      id: null,
+      title: null,
+      type: "Programa",
+      initialDate: new Date(),
+      finalDate: new Date(tomorrow),
+      authors: [],
+      description: null,
+      image: null,
+      links: [],
+    });
+  }
+
   function handleClose() {
     cleanInsertedData();
     setOpenActivityRegister(false);
@@ -89,32 +138,10 @@ export default function ActivityRegister() {
       setOpenActivityRegister(false);
       cleanInsertedData();
     } else {
+      alert("Este nome já foi utilizado");
       setRegisterFail(true);
     }
     setButtonLoading(false);
-  }
-  function cleanInsertedData() {
-    setInsertedData({
-      id: "",
-      title: "",
-      type: "Programa",
-      initialDate: new Date(),
-      finalDate: new Date(tomorrow),
-      authors: [],
-      description: "",
-      image: "",
-      links: [],
-    });
-  }
-  function handleFileUpload(e) {
-    const img = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const tmp = { ...insertedData };
-      tmp.image = reader.result;
-      setInsertedData(tmp);
-    };
-    reader.readAsDataURL(img);
   }
 
   return (
@@ -140,113 +167,14 @@ export default function ActivityRegister() {
           </Typography>
           <Stack spacing={2}>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Grid container spacing={1.5}>
-                  <Grid item xs={12}>
-                    <TextField
-                      variant="outlined"
-                      label="Título"
-                      onChange={(e) => {
-                        let tmp = { ...insertedData };
-                        tmp.title = e.target.value;
-                        tmp.id = e.target.value.toLowerCase().replace(/ /g, "");
-                        setInsertedData(tmp);
-                      }}
-                      sx={{ width: "100%" }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Select
-                      id="demo-simple-select"
-                      value={insertedData.type}
-                      onChange={handleSelectChange}
-                      sx={{ width: "100%" }}
-                    >
-                      <MenuItem value={"Programa"}>Programa</MenuItem>
-                      <MenuItem value={"Projeto"}>Projeto</MenuItem>
-                      <MenuItem value={"Curso/Oficina"}>Curso/Oficina</MenuItem>
-                      <MenuItem value={"Evento"}>Evento</MenuItem>
-                      <MenuItem value={"Prestação de Serviços"}>
-                        Prestação de Serviços
-                      </MenuItem>
-                    </Select>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      variant="outlined"
-                      label="Autores"
-                      onBlur={(e) => {
-                        let tmp = { ...insertedData };
-                        tmp.authors.length > 0 &&
-                        !tmp.authors.includes(
-                          (author) => author.name === e.target.value
-                        )
-                          ? tmp.authors.push({ name: e.target.value })
-                          : (tmp.authors = [{ name: e.target.value }]);
-                        setInsertedData(tmp);
-                      }}
-                      sx={{ width: "100%" }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      variant="outlined"
-                      label="Links"
-                      onBlur={(e) => {
-                        let tmp = { ...insertedData };
-                        tmp.links.length > 0 &&
-                        !tmp.links.includes((link) => link === e.target.value)
-                          ? tmp.links.push(e.target.value)
-                          : (tmp.links = [e.target.value]);
-                        setInsertedData(tmp);
-                      }}
-                      sx={{ width: "100%" }}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <DatePicker
-                      label={"Data inicial"}
-                      value={insertedData}
-                      setValue={setInsertedData}
-                      date={"initialDate"}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <DatePicker
-                      label={"Data final"}
-                      value={insertedData}
-                      setValue={setInsertedData}
-                      date={"finalDate"}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={6}>
-                <Stack spacing={2}>
-                  <TextField
-                    variant="outlined"
-                    multiline
-                    maxRows={9.9}
-                    minRows={9.9}
-                    label="Descrição"
-                    onChange={(e) => {
-                      let tmp = { ...insertedData };
-                      tmp.description = e.target.value;
-                      setInsertedData(tmp);
-                    }}
-                    sx={{ width: "100%" }}
-                  />
-                  <Button variant="contained" component="label" size="large">
-                    Upload de Imagem
-                    <Input
-                      accept="image/*"
-                      id="icon-button-file"
-                      type="file"
-                      onChange={handleFileUpload}
-                    />
-                  </Button>
-                </Stack>
-              </Grid>
+              <ActivityRegisterLeft
+                insertedData={insertedData}
+                setInsertedData={setInsertedData}
+              />
+              <ActivityRegisterRight
+                insertedData={insertedData}
+                setInsertedData={setInsertedData}
+              />
             </Grid>
             <LoadingButton
               variant="contained"
@@ -254,6 +182,7 @@ export default function ActivityRegister() {
               color={registerFail ? "error" : "primary"}
               loading={buttonLoading}
               onClick={handleRegisterClick}
+              disabled={invalid}
               sx={{ width: "100%" }}
             >
               Cadastrar

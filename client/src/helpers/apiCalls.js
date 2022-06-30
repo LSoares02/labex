@@ -4,6 +4,10 @@ export async function getActivities() {
   return await api.get("/getAllActivities");
 }
 
+export async function getAccounts() {
+  return await api.get("/getAccounts");
+}
+
 export async function login(insertedData) {
   const response = await api.post("/getAccount", {
     email: insertedData.email,
@@ -63,5 +67,10 @@ export async function activityRegister(insertedData) {
       registerTime: new Date(),
     },
   });
-  return response;
+
+  if (response.data.error) {
+    return null;
+  } else {
+    return response;
+  }
 }

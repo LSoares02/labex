@@ -17,6 +17,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Backdrop, Collapse } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
+import { defaultImages } from "../../helpers/defaultImages";
+import { randomNumber } from "../../helpers/helpers";
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -33,16 +36,20 @@ export default function DetailsModal() {
     useGlobalState();
 
   const [expanded, setExpanded] = React.useState(false);
+  const [defaultImageNumber, setDefaultImageNumber] = React.useState(0);
+  const [cardDetails, setCardDetails] = React.useState(null);
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const [cardDetails, setCardDetails] = React.useState(null);
   React.useEffect(() => {
     if (detailsId)
       setCardDetails(
         extensionPosts.values.filter((post) => post.id === detailsId)[0]
       );
+    const index = randomNumber(defaultImages.length);
+    setDefaultImageNumber(index);
   }, [detailsId]);
 
   return (
@@ -69,7 +76,11 @@ export default function DetailsModal() {
         <CardMedia
           component="img"
           height="194"
-          image={cardDetails?.image}
+          image={
+            cardDetails?.image
+              ? cardDetails?.image
+              : defaultImages[defaultImageNumber]
+          }
           alt="Image"
         />
         <CardContent>

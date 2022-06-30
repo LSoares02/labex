@@ -103,7 +103,7 @@ export default function LoginModal() {
               label="E-mail"
               onChange={(e) => {
                 let tmp = { ...insertedData };
-                tmp.email = e.target.value;
+                tmp.email = e.target.value.toLowerCase();
                 setInsertedData(tmp);
               }}
             />

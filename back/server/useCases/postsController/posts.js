@@ -8,11 +8,18 @@ async function registerActivity(req, res) {
   const existingActivities = await getFromCloudant(documentName);
   if (existingActivities) {
     const filtered = existingActivities.values.filter(
-      (post) => post.id !== value.id
+      (post) => post.id === value.id
     );
-    filtered.push(value);
-
-    res.send(await insertOnCloudant(documentName, { values: filtered }));
+    if (filtered.length > 0) {
+      res.send({ error: "Activity already exists!" });
+    } else {
+      existingActivities.values.push(value);
+      res.send(
+        await insertOnCloudant(documentName, {
+          values: existingActivities.values,
+        })
+      );
+    }
   } else {
     res.send(await insertOnCloudant(documentName, { values: [value] }));
   }

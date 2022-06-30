@@ -1,10 +1,14 @@
 import React, { useContext, useState, createContext, useEffect } from "react";
 
+import { getAccounts } from "../helpers/apiCalls";
+
 const GlobalStateContext = createContext({});
 
 export default function GlobalStateProvider({ children }) {
   const [language, setLanguage] = useState("en");
+
   const [account, setAccount] = useState(null);
+  const [accounts, setAccounts] = useState(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -21,11 +25,22 @@ export default function GlobalStateProvider({ children }) {
   const [filteredByPage, setFilteredByPage] = useState([]);
   const [filteredBySearch, setFilteredBySearch] = useState([]);
 
+  const accountsApiCall = async () => {
+    const accounts = await getAccounts();
+    setAccounts(accounts.data);
+  };
+
+  useEffect(() => {
+    if (!accounts) accountsApiCall();
+  }, []);
+
   return (
     <GlobalStateContext.Provider
       value={{
         account,
         setAccount,
+        accounts,
+        setAccounts,
         language,
         setLanguage,
         loading,
