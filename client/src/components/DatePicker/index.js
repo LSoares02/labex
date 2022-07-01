@@ -7,6 +7,7 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 
 export default function DatePicker({ value, setValue, date, label }) {
   const handleChange = (newValue) => {
+    console.log(newValue);
     const tmp = { ...value };
     tmp[date] = newValue;
     setValue(tmp);

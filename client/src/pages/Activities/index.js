@@ -19,6 +19,7 @@ import PaginationComponent from "../../components/Pagination";
 export default function Dashboard() {
   const {
     extensionPosts,
+    filteredBySearch,
     filteredByPage,
     setFilteredByPage,
     setExtensionPosts,
@@ -39,12 +40,12 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    if (extensionPosts) {
+    if (filteredBySearch) {
       setFilteredByPage(
-        extensionPosts.values?.slice(currentPage * 12 - 12, currentPage * 12)
+        filteredBySearch.slice(currentPage * 12 - 12, currentPage * 12)
       );
     }
-  }, [extensionPosts, currentPage]);
+  }, [filteredBySearch, currentPage]);
 
   return (
     <ThemeProvider theme={theme}>

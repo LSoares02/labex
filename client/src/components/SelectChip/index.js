@@ -56,6 +56,10 @@ export default function SelectChip({ insertedData, setInsertedData }) {
     setInsertedData(tmp);
   }, [personName]);
 
+  React.useEffect(() => {
+    setPersonName([]);
+  }, [accounts]);
+
   return (
     <div>
       <FormControl variant="outlined" margin={"1"} style={{ width: "100%" }}>

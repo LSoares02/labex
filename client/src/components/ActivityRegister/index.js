@@ -24,7 +24,7 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
-  maxHeight: 420,
+  maxHeight: "100%",
 };
 
 export default function ActivityRegister() {
@@ -123,7 +123,6 @@ export default function ActivityRegister() {
       links: [],
     });
   }
-
   function handleClose() {
     cleanInsertedData();
     setOpenActivityRegister(false);

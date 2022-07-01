@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useGlobalState } from "../../hooks/globalState";
 
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
@@ -6,18 +7,47 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import Tooltip from "@mui/material/Tooltip";
+import LoadingButton from "@mui/lab/LoadingButton";
+
+import CachedIcon from "@mui/icons-material/Cached";
 
 import DatePicker from "../DatePicker";
 import SelectChip from "../SelectChip";
+
+import { getAccounts } from "../../helpers/apiCalls";
+import { Stack } from "@mui/material";
 
 export default function ActivityRegisterLeft({
   insertedData,
   setInsertedData,
 }) {
+  const { setAccounts } = useGlobalState();
+
+  const [buttonLoading, setButtonLoading] = React.useState(false);
+
   function handleSelectChange(event) {
     const tmp = { ...insertedData };
     tmp.type = event.target.value;
     setInsertedData(tmp);
+  }
+  function adjustLinks(string) {
+    const links = string.split(";");
+    return links.map((link) => {
+      if (link.length > 3) {
+        if (link.substring(0, 8).includes("http")) {
+          return link.trim();
+        } else {
+          return "http://" + link.trim();
+        }
+      }
+    });
+  }
+  async function handleUpdateAccounts() {
+    setButtonLoading(true);
+    const accounts = await getAccounts();
+    setAccounts(accounts.data);
+    setButtonLoading(false);
   }
 
   return (
@@ -62,25 +92,43 @@ export default function ActivityRegisterLeft({
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <SelectChip
-            insertedData={insertedData}
-            setInsertedData={setInsertedData}
-          />
+          <Grid container spacing={1}>
+            <Grid item xs={8}>
+              <SelectChip
+                insertedData={insertedData}
+                setInsertedData={setInsertedData}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <LoadingButton
+                variant="contained"
+                sx={{ height: "100%", width: "100%" }}
+                loading={buttonLoading}
+                onClick={handleUpdateAccounts}
+                startIcon={<CachedIcon />}
+              >
+                Atualizar
+              </LoadingButton>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            variant="outlined"
-            label="Links"
-            onBlur={(e) => {
-              let tmp = { ...insertedData };
-              tmp.links.length > 0 &&
-              !tmp.links.includes((link) => link === e.target.value)
-                ? tmp.links.push(e.target.value)
-                : (tmp.links = [e.target.value]);
-              setInsertedData(tmp);
-            }}
-            sx={{ width: "100%" }}
-          />
+          <Tooltip
+            title={<h3>Por gentileza, separe os links com ;</h3>}
+            placement="right"
+            arrow
+          >
+            <TextField
+              variant="outlined"
+              label="Links"
+              onBlur={(e) => {
+                let tmp = { ...insertedData };
+                tmp.links = adjustLinks(e.target.value);
+                setInsertedData(tmp);
+              }}
+              sx={{ width: "100%" }}
+            />
+          </Tooltip>
         </Grid>
         <Grid item xs={6}>
           <DatePicker

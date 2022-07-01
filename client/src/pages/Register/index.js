@@ -108,7 +108,7 @@ export default function Register() {
       <div id="top">
         <Header />
       </div>
-      <Container maxWidth="sm" sx={{ height: "100%", marginTop: 2 }}>
+      <Container maxWidth="sm" sx={{ height: "100%", marginTop: 10 }}>
         <Paper elevation={12} sx={{ padding: 2 }}>
           <Typography variant="h3" gutterBottom component="div">
             Cadastro
@@ -139,7 +139,10 @@ export default function Register() {
             />
             <Tooltip
               title={
-                "A senha deve ter no mínimo 8 caracteres, sendo pelo menos uma letra maiúscula, uma minúscula e um número."
+                <h3>
+                  A senha deve ter no mínimo 8 caracteres, sendo pelo menos uma
+                  letra maiúscula, uma minúscula e um número.
+                </h3>
               }
               placement="right"
               arrow

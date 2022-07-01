@@ -18,8 +18,13 @@ import { logout } from "../../helpers/helpers";
 import "./style.css";
 
 export default function Header() {
-  const { account, setAccount, setOpenLogin, setOpenActivityRegister } =
-    useGlobalState();
+  const {
+    account,
+    setAccount,
+    setSavedAccount,
+    setOpenLogin,
+    setOpenActivityRegister,
+  } = useGlobalState();
   const location = useLocation();
 
   function handleMenuClick() {
@@ -59,7 +64,9 @@ export default function Header() {
                   document.body.style.cursor = "default";
                 }}
                 onClick={() => {
-                  account ? logout(setAccount) : setOpenLogin(true);
+                  account
+                    ? logout(setAccount, setSavedAccount)
+                    : setOpenLogin(true);
                 }}
               >
                 Fazer Login

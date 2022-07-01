@@ -1,5 +1,6 @@
-export function logout(setAccount) {
+export function logout(setAccount, setSavedAccount) {
   setAccount(null);
+  setSavedAccount(null);
 }
 
 export function randomNumber(length) {

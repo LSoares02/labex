@@ -7,7 +7,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 
 export default function PaginationComponent() {
-  const { extensionPosts, currentPage, setCurrentPage } = useGlobalState();
+  const { filteredBySearch, currentPage, setCurrentPage } = useGlobalState();
 
   const [numberOfPages, setNumberOfPages] = React.useState(1);
   const handleChange = (event, value) => {
@@ -15,13 +15,13 @@ export default function PaginationComponent() {
   };
 
   React.useEffect(() => {
-    if (extensionPosts) {
-      const tmp = extensionPosts.values?.length / 12;
-      if (extensionPosts.values?.length % 12 !== 0) {
+    if (filteredBySearch) {
+      const tmp = filteredBySearch?.length / 12;
+      if (filteredBySearch?.length % 12 !== 0) {
         setNumberOfPages(Math.trunc(tmp) + 1);
       } else setNumberOfPages(Math.trunc(tmp));
     }
-  }, [extensionPosts]);
+  }, [filteredBySearch]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>

@@ -29,7 +29,8 @@ function stringToColor(string) {
 }
 
 export default function AvatarComponent() {
-  const { account, setAccount, setOpenLogin } = useGlobalState();
+  const { account, setAccount, setSavedAccount, setOpenLogin } =
+    useGlobalState();
 
   return (
     <div
@@ -41,7 +42,7 @@ export default function AvatarComponent() {
       }}
       id="avatar"
       onClick={() => {
-        account ? logout(setAccount) : setOpenLogin(true);
+        account ? logout(setAccount, setSavedAccount) : setOpenLogin(true);
       }}
     >
       <Tooltip title={account ? "Logout" : "Login"}>
