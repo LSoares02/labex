@@ -16,8 +16,8 @@ export default function PaginationComponent() {
 
   React.useEffect(() => {
     if (filteredBySearch) {
-      const tmp = filteredBySearch?.length / 12;
-      if (filteredBySearch?.length % 12 !== 0) {
+      const tmp = filteredBySearch.length / 12;
+      if (filteredBySearch.length % 12 !== 0) {
         setNumberOfPages(Math.trunc(tmp) + 1);
       } else setNumberOfPages(Math.trunc(tmp));
     }

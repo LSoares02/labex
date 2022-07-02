@@ -14,9 +14,15 @@ const Input = styled("input")({
 export default function ActivityRegisterRight({
   insertedData,
   setInsertedData,
+  setInvalid,
 }) {
   const [fileUploaded, setFileUploaded] = React.useState(false);
+  function processedPhoto() {
+    setFileUploaded(false);
+    setInvalid(false);
+  }
   function handleFileUpload(e) {
+    setInvalid(true);
     setFileUploaded(true);
     const img = e.target.files[0];
     const reader = new FileReader();
@@ -24,7 +30,7 @@ export default function ActivityRegisterRight({
       const tmp = { ...insertedData };
       tmp.image = reader.result;
       setInsertedData(tmp);
-      setTimeout(() => setFileUploaded(false), 1000);
+      setTimeout(() => processedPhoto(), 1000);
     };
     reader.readAsDataURL(img);
   }

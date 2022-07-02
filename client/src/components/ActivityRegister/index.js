@@ -173,6 +173,7 @@ export default function ActivityRegister() {
               <ActivityRegisterRight
                 insertedData={insertedData}
                 setInsertedData={setInsertedData}
+                setInvalid={setInvalid}
               />
             </Grid>
             <LoadingButton

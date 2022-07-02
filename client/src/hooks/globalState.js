@@ -25,8 +25,22 @@ export default function GlobalStateProvider({ children }) {
   const [extensionPosts, setExtensionPosts] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
+
   const [filteredByPage, setFilteredByPage] = useState([]);
   const [filteredBySearch, setFilteredBySearch] = useState(null);
+  const [filteredType, setFilteredType] = React.useState([]);
+  const [filterBy, setFilterBy] = React.useState("title");
+
+  const [type, setType] = React.useState(0);
+  const types = [
+    "Todos",
+    "Programa",
+    "Projeto",
+    "Curso/Oficina",
+    "Evento",
+    "Prestação de Serviços",
+  ];
+
   const [search, setSearch] = React.useState(null);
 
   //account stuff:
@@ -81,8 +95,6 @@ export default function GlobalStateProvider({ children }) {
         setLoading,
         extensionPosts,
         setExtensionPosts,
-        search,
-        setSearch,
         openDetails,
         setOpenDetails,
         detailsId,
@@ -97,6 +109,15 @@ export default function GlobalStateProvider({ children }) {
         setFilteredByPage,
         filteredBySearch,
         setFilteredBySearch,
+        filteredType,
+        setFilteredType,
+        filterBy,
+        setFilterBy,
+        type,
+        setType,
+        types,
+        search,
+        setSearch,
       }}
     >
       {children}

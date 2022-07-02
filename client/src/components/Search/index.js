@@ -14,7 +14,6 @@ const Search = styled("div")(({ theme }) => ({
   marginLeft: 0,
   width: "100%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
     width: "auto",
   },
 }));
@@ -45,14 +44,20 @@ export default function SearchComponent() {
     search,
     setSearch,
     setCurrentPage,
+    filteredType,
+    setFilteredType,
+    filterBy,
+    setFilterBy,
+    type,
+    setType,
+    types,
   } = useGlobalState();
-
-  const [filterBy, setFilterBy] = React.useState("title");
 
   function handleSearch(e) {
     if (e.key === "Enter") {
       setSearch(e.target.value);
       setCurrentPage(1);
+      e.target.value = "";
     }
   }
   function handleChange(e) {
@@ -64,16 +69,16 @@ export default function SearchComponent() {
   function handleFilterBy() {
     if (filterBy === "title") {
       setFilteredBySearch(
-        extensionPosts?.values?.filter((post) => {
+        filteredType.filter((post) => {
           return post.title
             .toLowerCase()
             .replace(/\s/g, "")
             .includes(search.toLowerCase().replace(/\s/g, ""));
         })
       );
-    } else if (filterBy === "authors") {
+    } else if (filterBy === "author") {
       setFilteredBySearch(
-        extensionPosts?.values?.filter((post) => {
+        filteredType.filter((post) => {
           return post.authors.some(
             (author) =>
               author.name
@@ -87,55 +92,59 @@ export default function SearchComponent() {
           );
         })
       );
-    } else if (filterBy === "type") {
-      setFilteredBySearch(
-        extensionPosts?.values?.filter((post) => {
-          return post.type
-            .toLowerCase()
-            .replace(/\s/g, "")
-            .includes(search.toLowerCase().replace(/\s/g, ""));
-        })
-      );
     }
+  }
+  function toggleType() {
+    if (type < types.length - 1) setType(type + 1);
+    else setType(0);
   }
 
   React.useEffect(() => {
     if (search) handleFilterBy();
-    else setFilteredBySearch(extensionPosts?.values);
-  }, [search]);
+    else setFilteredBySearch(filteredType);
+  }, [search, filteredType]);
 
   React.useEffect(() => {
-    setSearch("");
-  }, [filterBy]);
+    if (extensionPosts) {
+      const tmp = [...extensionPosts.values];
+      if (types[type] === "Todos") setFilteredType(tmp);
+      else setFilteredType(tmp.filter((post) => post.type === types[type]));
+      setCurrentPage(1);
+    }
+  }, [type]);
+
+  React.useEffect(() => {
+    if (extensionPosts) {
+      const tmp = [...extensionPosts.values];
+      if (types[type] === "Todos") setFilteredType(tmp);
+      else setFilteredType(tmp.filter((post) => post.type === types[type]));
+    }
+  }, [extensionPosts]);
 
   return (
-    <Stack direction={"row"}>
+    <Stack direction={"row"} spacing={1}>
+      <Button size="small" onClick={toggleType}>
+        {types[type]}
+      </Button>
       <Button
         variant={filterBy === "title" ? "outlined" : "text"}
         size="small"
         onClick={() => {
+          setSearch(null);
           setFilterBy("title");
         }}
       >
         Título
       </Button>
       <Button
-        variant={filterBy === "authors" ? "outlined" : "text"}
+        variant={filterBy === "author" ? "outlined" : "text"}
         size="small"
         onClick={() => {
-          setFilterBy("authors");
+          setSearch(null);
+          setFilterBy("author");
         }}
       >
         Autor
-      </Button>
-      <Button
-        variant={filterBy === "type" ? "outlined" : "text"}
-        size="small"
-        onClick={() => {
-          setFilterBy("type");
-        }}
-      >
-        Tipo
       </Button>
       <Search>
         <SearchIconWrapper>

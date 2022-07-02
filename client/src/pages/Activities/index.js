@@ -1,4 +1,3 @@
-import { Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import { useGlobalState } from "../../hooks/globalState";
 
@@ -8,6 +7,9 @@ import Header from "../../components/Header";
 import NavigationBar from "../../components/NavigationBar";
 import ActivityCard from "../../components/ActivityCard";
 
+import Toolbar from "@mui/material/Toolbar";
+
+import { Grid } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../../helpers/theme";
 import "./style.css";
@@ -15,6 +17,7 @@ import "./style.css";
 import Loading from "../../components/Loading";
 import DetailsModal from "../../components/DetailsModal";
 import PaginationComponent from "../../components/Pagination";
+import SearchResultBar from "../../components/SearchResultBar";
 
 export default function Dashboard() {
   const {
@@ -26,6 +29,7 @@ export default function Dashboard() {
     currentPage,
     loading,
     setLoading,
+    search,
   } = useGlobalState();
 
   const apiCall = async () => {
@@ -54,6 +58,16 @@ export default function Dashboard() {
           <Header />
           <NavigationBar />
         </div>
+        <Toolbar
+          variant="dense"
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            paddingTop: 0.5,
+          }}
+        >
+          {search ? <SearchResultBar /> : ""}
+        </Toolbar>
         <div id="cards">
           <DetailsModal />
           <Grid container spacing={2}>
