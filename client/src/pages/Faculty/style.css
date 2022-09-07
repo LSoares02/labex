@@ -4,3 +4,16 @@
     z-index: 2;
 }
 
+#teacherCard{
+    border-radius: 20px;
+    display: flex;
+    height: 300px;
+    box-shadow: 2px 2px 20px 10px #D3D3D3;
+    margin: 20px;
+    text-align: justify;
+    line-height: 1.5;
+}
+
+.teacherImage{
+    border-radius: 20px;
+}
