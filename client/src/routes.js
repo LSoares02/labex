@@ -9,6 +9,7 @@ import Faculty from "./pages/Faculty";
 import Social from "./pages/Social";
 import Register from "./pages/Register";
 import ActivityDetails from "./pages/ActivityDetails";
+import ActivityRegister from "./pages/ActivityRegister";
 
 export default function Pages() {
   return (
@@ -17,13 +18,18 @@ export default function Pages() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/activities" element={<Dashboard />} />
+          <Route
+            exact
+            path="/activities/:activityID"
+            element={<ActivityDetails />}
+          />
           <Route exact path="/faculty" element={<Faculty />} />
           <Route exact path="/social" element={<Social />} />
           <Route exact path="/register" element={<Register />} />
           <Route
             exact
-            path="/activities/:activityID"
-            element={<ActivityDetails />}
+            path="/activities/register"
+            element={<ActivityRegister />}
           />
         </Routes>
       </GlobalStateProvider>

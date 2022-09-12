@@ -20,13 +20,16 @@ export default function ActivityDetails() {
 
   return (
     <ThemeProvider theme={theme}>
+      <div id="top">
+        <Header />
+        <NavigationBar />
+      </div>
       <div id="detailsContent">
-        <div id="top">
-          <Header />
-          <NavigationBar />
+        <div id="activityImgs">
+          <img />
         </div>
         <div id="activityText">
-          <ReactMarkdown children={""} />
+          <ReactMarkdown children={activityID} />
         </div>
       </div>
     </ThemeProvider>

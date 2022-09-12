@@ -7,7 +7,6 @@ import Backdrop from "@mui/material/Backdrop";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Stack } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 import { activityRegister } from "../../helpers/apiCalls";

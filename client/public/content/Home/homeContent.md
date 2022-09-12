@@ -1,7 +1,9 @@
-# Título
+# Sobre
 
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+A **extensão universitária** possibilita a formação do profissional cidadão e se credencia junto à sociedade como um espaço privilegiado de **produção e disseminação do conhecimento**.
 
-# Título
+A inserção da universidade está vinculada a articulação do conhecimento científico advindo do ensino e da pesquisa com as necessidades da comunidade, interagindo e transformando a realidade social.
 
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+O **Laboratório para a Promoção de Extensão Universitária (LabEx)** tem o intuito de contribuir com a formação da Extensão Universitária no curso de Administração da Escola Paulista de Política, Economia e Negócios da UNIFESP. O programa vem sendo desenvolvido por docentes e discentes do curso de Administração, com parcerias de entidades acadêmicas do campus.
+
+Navegando neste site, será possível encontrar programas, projetos, cursos e oficinas, eventos e prestação de serviços que já foram ou estão sendo realizados.

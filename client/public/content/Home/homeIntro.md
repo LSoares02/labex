@@ -1,7 +1,9 @@
-# Quem somos?
+# Missão:
 
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+Contribuir para a **curricularização da Extensão Universitária** no curso de graduação em Administração da EPPEN/ UNIFESP, por meio de uma proposta integradora que envolve as Unidades Curriculares (UCs) **Atividades de Extensão I** e **Atividades de Extensão II**.
 
-# Objetivo
+# Visão
 
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+Promover ações que tragam **benefícios para a sociedade** e **contribuam para a formação dos alunos** envolvidos.
+
+# Valores:
