@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import TextField from "@mui/material/TextField";
-import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
 
 export default function DatePicker({ value, setValue, date, label }) {
@@ -14,10 +14,10 @@ export default function DatePicker({ value, setValue, date, label }) {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DesktopDatePicker
         label={label}
-        inputFormat="dd/MM/yyyy"
+        inputFormat="DD/MM/YYYY"
         value={value[date]}
         onChange={handleChange}
         renderInput={(params) => (
