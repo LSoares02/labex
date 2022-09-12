@@ -5,7 +5,7 @@
 }
 
 #socialContent{
-    /* height: 100%; */
+    overflow-x: hidden;
 }
 
 #socialCards{

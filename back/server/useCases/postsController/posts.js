@@ -34,4 +34,15 @@ async function getAllActivities(req, res) {
   res.send(existingActivities);
 }
 
-module.exports = { registerActivity, getAllActivities };
+async function getActivityDetails(req, res) {
+  const { id } = req.body;
+  const activityDetails = await getFromCloudant("extensionDetails");
+
+  const desiredDetails = activityDetails.values.find(
+    (activity) => activity.id === id
+  );
+
+  res.send(desiredDetails);
+}
+
+module.exports = { registerActivity, getAllActivities, getActivityDetails };

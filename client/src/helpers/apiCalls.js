@@ -1,9 +1,5 @@
 import api from "../services/api";
 
-export async function getActivities() {
-  return await api.get("/getAllActivities");
-}
-
 export async function getAccounts() {
   return await api.get("/getAccounts");
 }
@@ -41,6 +37,10 @@ export async function register(insertedData) {
   }
 }
 
+export async function getActivities() {
+  return await api.get("/getAllActivities");
+}
+
 export async function activityRegister(insertedData) {
   const {
     id,
@@ -73,4 +73,12 @@ export async function activityRegister(insertedData) {
   } else {
     return response;
   }
+}
+
+export async function getActivityText(activityId) {
+  const response = await api.post("/getActivityDetails", {
+    id: activityId,
+  });
+
+  return response.data.text;
 }

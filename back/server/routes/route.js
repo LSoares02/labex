@@ -6,10 +6,12 @@ const router = express.Router();
 const {
   registerActivity,
   getAllActivities,
+  getActivityDetails,
 } = require("../useCases/postsController/posts");
 
 router.post("/registerActivity", registerActivity);
 router.get("/getAllActivities", getAllActivities);
+router.post("/getActivityDetails", getActivityDetails);
 
 //Accounts
 const {
